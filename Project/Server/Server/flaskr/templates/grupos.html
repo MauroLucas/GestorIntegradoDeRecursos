@@ -1,0 +1,90 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+</head><center>
+<body>
+<h1>Gestor integrado de recursos</h1>
+<br><br>
+    <img src="http://systemtec.com.co/helpdesk/_lib/img/usr__NM__menu_img__NM__avatar1.png"width="125" height="125"><br><br>
+
+
+
+
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
+<a href="{{ url_for('ControladorAgregarParticipante.agregar_participante') }}" class="btn btn-outline-primary">Agregar participante</a>
+<h3>Mis Grupos</h3>
+    <select id="group_name">
+    <option values="0">Selecciona Grupo</option>
+        {% for grupo in grupos %}
+        <option value="{{ grupo.grupo.id_grupo }}">{{ grupo.grupo.nombre }}</option>
+    {% endfor %}
+    </select>
+<div id="response-participantes" ></div>
+
+<table id="response-comentarios" ></table>
+</center>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#group_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_data')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-participantes").empty();
+                    for(i=0;i<response.participantes.length;i++){
+                        $("#response-participantes").append("<h3>"+response.participantes[i]+"</h3>");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#group_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_comment')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-comentarios").empty();
+                    $("#response-comentarios").append("<tr>" + "<th>" + "Comentario" + "</th>" + "<th>" + "Usuario" + "</th>" + "</th>" + "<th>" + "Fecha" + "</th>" + "</tr>")
+
+                    for(i=0;i<response.comments.length;i++){
+
+                        $("#response-comentarios").append(
+
+
+                            "<tr>" + "<th>" + response.comments[i] + "</th>"
+                            + "<th>" + response.usuario[i] + "</th>" 
+                            + "<th>" + response.fecha[i] + "</th>" + "</tr>"
+
+                            );
+
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
