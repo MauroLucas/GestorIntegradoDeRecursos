@@ -1,30 +1,35 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
 <body>
-<h1><center>Intefaz ingresar recurso</center></h1>
+<h1><center>Agregar recurso</center></h1>
+<center>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="alert alert-dismissible alert-danger" style="width: 300px">
     {% for message in messages %}
-      <li>{{ message }}</li>
+      <p>{{ message.1 }}</p>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
+    </center>
+    <center>
+
 <form method="post">
-  <center>
   <br>
   <div class="form-group">
-      <label class="col-form-label" for="inputDefault">Ingresar recurso<br><br></label>
-      <input type="text" name="resource" class="form-control" placeholder="resource" id="inputDefault">
+      <label class="col-form-label" for="inputDefault">Recurso<br><br></label>
+      <input type="text" name="resource" class="form-control" placeholder="resource" id="inputDefault" style="width: 300px" required>
     </div>
     <br>
    <div class="form-group">
       <label for="exampleTextarea">Descripcion<br><br></label>
-      <textarea inputmode="True" class="form-control" name="description" id="exampleTextarea" rows="3"></textarea>
+      <textarea inputmode="True" class="form-control" name="description" id="exampleTextarea" rows="3" style="width: 300px"></textarea>
     </div>
 
     <br>
@@ -32,24 +37,43 @@
     </div>
       <br>
   <div class="form-group">
-      <label class="col-form-label" for="inputDefault">Ingresar categoria<br><br></label>
-      <select name="category_selection" method="GET" action="/">
+      <label class="col-form-label" for="inputDefault">Categoria</label>
+        <br>
+      <select name="category_selection" id="category_selection" method="GET" action="/">
           {% for categoria in categorias %}
               <option value="{{categoria.nombre}}" SELECTED>{{categoria.nombre}}</option>"
           {% endfor %}
-          <option value="nueva_categoria" SELECTED>Nueva Categoria</option>
+          <option value="nueva_categoria" id="new_category" SELECTED>Nueva Categoria</option>
       </select>
-      <input type="text" name="category_input" class="form-control" placeholder="resource" id="inputDefault">
-      <input type="text" name="tags" class="form-control" placeholder="tag1, tag2, tag3">
+        <br>
+      <input type="text" name="category_input" class="form-control" placeholder="nueva categoria" id="category_input" style="width: 300px" required>
+      <br>
+      <label class="col-form-label">Etiquetas</label>
+      <br>
+      <input type="text" name="tags" class="form-control" placeholder="tag1, tag2, tag3" style="width: 300px">
     </div>
     <br>
 
-  <button type="submit">Submit</button><br><br><br><br><br>
+  <button type="submit" class="btn btn-primary">Agregar Recurso</button><br><br><br><br><br>
 
 </form>
-    <a href="{{ url_for('ControladorEditUsuario.edit') }}"class="btn btn-primary">Edit</a>
-    <a href="{{ url_for('auth.login_succesful') }}">Back to Login Page/LOGUOT</a>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <a href="{{ url_for('auth.login_succesful') }}" class="btn btn-outline-primary">Inicio</a>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">Log Out</a>
+</div>
 {% endwith %}
  </center>
 </body>
 </html>
+<script>
+    $("#category_selection").change(function(){
+        if($('#category_selection').find(":selected").attr('id')==="new_category"){
+            $('#category_input').prop("disabled", false);
+            $('#category_input').prop("required", true);
+        }
+        else{
+            $('#category_input').prop("disabled", true);
+            $('#category_input').prop("required", false);
+        }
+    });
+</script>

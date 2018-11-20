@@ -7,32 +7,34 @@
 </head>
 <body>
 <h1><center>Login</center></h1>
+    <center>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="alert alert-dismissible alert-danger" style="width: 300px">
     {% for message in messages %}
-      <li>{{ message }}</li>
+      <p>{{ message.1 }}</p>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
+    </center>
 <form method="post">
   <center>
   <br>
   <div class="form-group">
   <label class="col-form-label" for="inputDefault">Username<br><br></label>
-  <input type="text" name="username" class="form-control" placeholder="username" id="inputDefault">
+  <input type="text" name="username" class="form-control" placeholder="username" style="width: 300px" required>
   </div>
 
   <br><br>
 
   <div class="form-group">
   <label class="col-form-label" for="inputDefault">Password<br><br></label>
-  <input type="text" name="password" class="form-control" placeholder="password" id="inputDefault">
+  <input type="password" name="password" class="form-control" placeholder="password" style="width: 300px" required>
   </div>
 
   <br>
 
-  <button type="submit">Login</button><br><br><br><br><br>
+  <button type="submit" class="btn btn-primary">Login</button><br><br><br><br><br>
 
 </form>
     <a href="{{ url_for('main.home') }}">Back to Home Page</a>
