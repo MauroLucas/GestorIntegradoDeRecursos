@@ -23,20 +23,11 @@ def agregar_participante():
         if not participante:
             error = 'The group needs the participant'
         if error is None:
-            #user = db.session.query(Usuario).filter(Usuario.username == session['user']).one()
-            #recurso = Recurso(recurso=resource, descripcion=description, fecha=datetime.datetime.now())
-            #db.session.add(recurso)
-            #db.session.flush()
-            #if db.session.query(Categoria.query.filter(Categoria.nombre == category).exists()).scalar():
-             #   categoria = db.session.query(Categoria).filter(Categoria.nombre == category).one()
-            #else:
-             #   categoria = Categoria(nombre=category, id_usuario=user.id_usuario)
-              #  db.session.add(categoria)
-               # db.session.flush()
-            #db.session.add(CategoriaXRecurso(id_recurso=recurso.id_recurso, id_categoria=categoria.id_categoria))
-            #db.session.commit()
-            print 'Participante ' +str(participante)
-            print 'grupo ' +str(grupo)
+
+            participanteNuevo = db.session.query(Usuario).filter(Usuario.username == participante).one()
+            grupoSelect = db.session.query(Grupo).filter(Grupo.nombre == grupo).one()
+            db.session.add(UsuarioXGrupo(id_grupo=grupoSelect.id_grupo, id_usuario=participanteNuevo.id_usuario))
+            db.session.commit()
             return redirect(url_for('auth.login_succesful'))
 
         flash(error)
