@@ -3,64 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
 <body>
-<p>Buscar por etiqueta</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Buscar por etiqueta</a>
+    <form method="post" class="form-inline my-2 my-lg-0">
+    <input type="text" class="form-control mr-sm-2" name="etiquetabuscar" placeholder="etiqueta">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+</nav>
+<center>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="alert alert-dismissible alert-danger" style="width: 300px">
     {% for message in messages %}
-      <li>{{ message }}</li>
+      <p>{{ message.1 }}</p>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
-<form method="post">
-    <input type="text" name="etiquetabuscar" placeholder="etiqueta">
-    <button type="submit">Buscar</button>
-</form>
+    </center>
     <ul>
 {% for recursos in recursosBuscados %}
     <li>{{ recursos }}</li>
 {% endfor %}
+    <center>
 <h3>Mis Categorias</h3>
-<ul>
      {% if flag==True %}
     {% for categoria in categorias %}
-        <li>{{ categoria.nombre }}</li>
-        <ul>
-        {% for recurso in categoria.recursos %}
-            <li> {{ recurso.recurso.recurso }}</li>
-
-        {% endfor %}
-         </ul>
-
-
+        <div class="card bg-light mb-3" style="max-width: 20rem;">
+            <div class="card-title card-header">{{ categoria.nombre }}</div>
+            <div class="card-body">
+                {% for recurso in categoria.recursos %}
+                    <a href="{{ recurso.recurso.recurso}}" class="card-text">{{ recurso.recurso.recurso}}</a>
+                {% endfor %}
+            </div>
+        </div>
     {% endfor %}
     {% endif %}
 
   {% if flag==False %}
     {% for categoria in categorias %}
-        <li>{{ categoria.nombre }}</li>
-        <ul>
-        {% for recurso in categoria.recursos %}
-            {% for eti in recurso.recurso.etiquetas %}
-                {% if eti.etiqueta.id_etiqueta==etiqueta1.id_etiqueta %}
-            <li> {{ recurso.recurso.recurso}}</li>
-                {% endif %}
-             {% endfor %}
-
-        {% endfor %}
-         </ul>
-
-
+        <div class="card bg-light mb-3" style="max-width: 20rem;">
+            <div class="card-title card-header">{{ categoria.nombre }}</div>
+            <div class="card-body">
+                {% for recurso in categoria.recursos %}
+                    {% for eti in recurso.recurso.etiquetas %}
+                        {% if eti.etiqueta.id_etiqueta==etiqueta1.id_etiqueta %}
+                            <a href="{{ recurso.recurso.recurso}}" class="card-text">{{ recurso.recurso.recurso}}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        <br>
     {% endfor %}
     {% endif %}
-
-
-
 </ul>
-    <a href="{{ url_for('main.home') }}">Back to Home Page</a>
-{% endwith %}
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <a href="{{ url_for('auth.login_succesful') }}" class="btn btn-outline-primary">Inicio</a>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">Log Out</a>
+</div>{% endwith %}
+</center>
 </body>
 
 </html>
