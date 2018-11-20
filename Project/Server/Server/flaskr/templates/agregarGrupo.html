@@ -3,34 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
 <body>
-<h1><center>Intefaz crear grupo</center></h1>
+<h1><center>Crear grupo</center></h1>
+<center>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="alert alert-dismissible alert-danger" style="width: 300px">
     {% for message in messages %}
-      <li>{{ message }}</li>
+      <p>{{ message.1 }}</p>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
+    </center>
+    <center>
 <form method="post">
   <center>
   <br>
   <div class="form-group">
       <label class="col-form-label" for="inputDefault">Ingresar nombre del Grupo<br><br></label>
-      <input type="text" name="grupo" class="form-control" placeholder="grupo" id="inputDefault">
+      <input type="text" name="grupo" class="form-control" placeholder="grupo" id="inputDefault" style="width: 300px" required>
     </div>
     <br>
 
-
-
-
-  <button type="submit">Submit</button><br><br><br><br><br>
+  <button type="submit" class="btn btn-primary">Submit</button><br><br><br><br><br>
 
 </form>
-    <a href="{{ url_for('ControladorEditUsuario.edit') }}"class="btn btn-primary">Edit</a>
-    <a href="{{ url_for('auth.login_succesful') }}">Back to Login Page/LOGUOT</a>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <a href="{{ url_for('auth.login_succesful') }}" class="btn btn-outline-primary">Inicio</a>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">Log Out</a>
+</div>
 {% endwith %}
  </center>
 </body>
