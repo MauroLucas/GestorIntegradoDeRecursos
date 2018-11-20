@@ -10,12 +10,8 @@
 <h1>Gestor integrado de recursos</h1>
 <br><br>
     <img src="http://systemtec.com.co/helpdesk/_lib/img/usr__NM__menu_img__NM__avatar1.png"width="125" height="125"><br><br>
-
-
-
-
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
 <a href="{{ url_for('ControladorAgregarParticipante.agregar_participante') }}" class="btn btn-outline-primary">Agregar participante</a>
+<br><br>
 <h3>Mis Grupos</h3>
     <select id="group_name">
     <option values="0">Selecciona Grupo</option>
@@ -23,9 +19,29 @@
         <option value="{{ grupo.grupo.id_grupo }}">{{ grupo.grupo.nombre }}</option>
     {% endfor %}
     </select>
-<div id="response-participantes" ></div>
-
-<table id="response-comentarios" ></table>
+<br><br>
+<table class="table table-hover" style="float: left; width: 25%">
+  <thead>
+    <tr>
+      <th scope="col">Usuarios</th>
+    </tr>
+  </thead>
+  <tbody id="response-participantes">
+  </tbody>
+</table>
+<table class="table table-hover" style="float: right; width: 75%">
+  <thead>
+    <tr>
+      <th scope="col">Comentarios</th>
+    </tr>
+  </thead>
+  <tbody id="response-comentarios">
+  </tbody>
+</table>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <a href="{{ url_for('auth.login_succesful') }}" class="btn btn-outline-primary">Inicio</a>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">Log Out</a>
+</div>
 </center>
 </body>
 </html>
@@ -44,7 +60,12 @@
                     var i = 0;
                     $("#response-participantes").empty();
                     for(i=0;i<response.participantes.length;i++){
-                        $("#response-participantes").append("<h3>"+response.participantes[i]+"</h3>");
+                        $("#response-participantes").append(
+
+
+                            "<tr class=\"table-dark\">" + "<th>" + response.participantes[i] + "</th>" + "</tr>"
+
+                            );
                     }
                 }
             });
@@ -73,7 +94,7 @@
                         $("#response-comentarios").append(
 
 
-                            "<tr>" + "<th>" + response.comments[i] + "</th>"
+                            "<tr class=\"table-light\">" + "<th>" + response.comments[i] + "</th>"
                             + "<th>" + response.usuario[i] + "</th>" 
                             + "<th>" + response.fecha[i] + "</th>" + "</tr>"
 

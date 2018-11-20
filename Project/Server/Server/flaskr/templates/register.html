@@ -3,24 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
 <body>
-<p>Register</p>
+<h1><center>Register</center></h1>
+    <center>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="alert alert-dismissible alert-danger" style="width: 300px">
     {% for message in messages %}
-      <li>{{ message }}</li>
+      <p>{{ message.1 }}</p>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
-<form method="post">
-    <input type="text" name="username" placeholder="username">
-    <input type="text" name="password" placeholder="password">
-    <input type="text" name="nombre" placeholder="nombre">
-    <input type="text" name="apellido" placeholder="apellido">
-    <input type="text" name="mail" placeholder="mail">
-    <button type="submit">Register</button>
+    </center>
+    <form method="post">
+  <center>
+  <br>
+  <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Username<br><br></label>
+  <input type="text" name="username" class="form-control" placeholder="username" style="width: 300px" required>
+  </div>
+
+  <br>
+
+  <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Password<br><br></label>
+  <input type="password" name="password" class="form-control" placeholder="password" style="width: 300px" required>
+  </div>
+
+  <br>
+
+      <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Nombre<br><br></label>
+  <input type="text" name="nombre" class="form-control" placeholder="nombre" style="width: 300px" required>
+  </div>
+
+  <br>
+
+        <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Apellido<br><br></label>
+  <input type="text" name="apellido" class="form-control" placeholder="apellido" style="width: 300px" required>
+  </div>
+
+  <br>
+
+        <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Email<br><br></label>
+  <input type="text" name="mail" class="form-control" placeholder="email" style="width: 300px" required>
+  </div>
+
+  <br>
+
+  <button type="submit" class="btn btn-primary">Register</button><br><br><br><br><br>
+
 </form>
     <a href="{{ url_for('main.home') }}">Back to Home Page</a>
 {% endwith %}

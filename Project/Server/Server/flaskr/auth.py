@@ -89,8 +89,9 @@ def logout():
 
 @bp.route('/login_succesful')
 def login_succesful():
-    user = db.session.query(Usuario).filter(Usuario.username == session['user']).one()
-    return render_template('user_page.html', categorias=get_user_categories(user))
+    if 'user' in session:
+        return render_template('user_page.html')
+    return render_template('home.html')
 
 
 @bp.route('/create_group', methods=('GET', 'POST'))
